@@ -115,6 +115,20 @@ const AddProductMain = () => {
                     />
                   </div>
                   <div className="mb-4">
+                        <label htmlFor="product_price" className="form-label">
+                          year
+                        </label>
+                        <input
+                          type="number"
+                          placeholder="Type here"
+                          className="form-control"
+                          id="product_price"
+                          required
+                          value={year}
+                          onChange={(e) => setYear(e.target.value)}
+                        />
+                      </div>
+                  <div className="mb-4">
                     <label className="form-label">color</label>
                     <textarea
                       placeholder="Type here"

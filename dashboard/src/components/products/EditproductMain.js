@@ -167,6 +167,28 @@ const EditProductMain = (props) => {
                         />
                       </div>
                       <div className="mb-4">
+                    <label className="form-label">color</label>
+                    <textarea
+                      placeholder="Type here"
+                      className="form-control"
+                      rows="1"
+                      required
+                      value={color}
+                      onChange={(e) => setColor(e.target.value)}
+                    ></textarea>
+                  </div>
+                  <div className="mb-4">
+                    <label className="form-label">kind of grape</label>
+                    <textarea
+                      placeholder="Type here"
+                      className="form-control"
+                      rows="1"
+                      required
+                      value={grapeVariety}
+                      onChange={(e) => setGrapeVariety(e.target.value)}
+                    ></textarea>
+                  </div>
+                      <div className="mb-4">
                         <label className="form-label">Description</label>
                         <textarea
                           placeholder="Type here"

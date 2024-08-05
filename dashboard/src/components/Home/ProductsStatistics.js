@@ -5,7 +5,7 @@ const ProductsStatistics = () => {
     <div className="col-xl-6 col-lg-12">
       <div className="card mb-4 shadow-sm">
         <article className="card-body">
-          <h5 className="card-title">Products statistics</h5>
+          <h5 className="card-title">number of bottles by color</h5>
           <iframe
             style={{
               background: "#FFFFFF",
@@ -15,7 +15,7 @@ const ProductsStatistics = () => {
               width: "100%",
               height: "350px",
             }}
-            src="https://charts.mongodb.com/charts-shoeshoptutorial-bzbxw/embed/charts?id=1f926980-090b-44c6-b011-3e94b2efddca&maxDataAge=3600&theme=light&autoRefresh=true"
+            src="https://charts.mongodb.com/charts-wineshop-sqkrzsv/embed/charts?id=66b0b795-61ff-45c1-8e46-da10464dddce&maxDataAge=60&theme=light&autoRefresh=true"
           ></iframe>
         </article>
       </div>

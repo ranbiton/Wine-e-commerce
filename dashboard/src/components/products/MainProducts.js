@@ -8,6 +8,7 @@ import Message from "../LoadingError/Error";
 
 const MainProducts = () => {
   const [keyword, setKeyword] = useState(""); // State to store the search keyword
+  const [searchResults, setSearchResults] = useState([]); // State to store filtered products
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
@@ -22,15 +23,19 @@ const MainProducts = () => {
 
   // Function to handle form submission
   const submitHandler = (e) => {
-    e.preventDefault(); // Prevents the default form submit behavior
+    e.preventDefault();
+    // Filters products based on the keyword entered and sets search results
+    const results = products.filter((product) =>
+      product.name.toLowerCase().includes(keyword.toLowerCase()) ||
+      product.color.toLowerCase().includes(keyword.toLowerCase()) ||
+      product.grapeVariety.toLowerCase().includes(keyword.toLowerCase())
+    );
+    setSearchResults(results);
+    console.log('Searching for:', keyword);
   };
 
-  // Filters products based on the keyword entered
-  const filteredProducts = keyword
-    ? products.filter((product) =>
-        product.name.toLowerCase().includes(keyword.toLowerCase())
-      )
-    : products; // If no keyword, show all products
+  // Sets filtered products to be displayed
+  const filteredProducts = searchResults.length > 0 ? searchResults : products;
 
   return (
     <section className="content-main">
