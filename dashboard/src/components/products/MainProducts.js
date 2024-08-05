@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Product from "./Product";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
 
 const MainProducts = () => {
+  const [keyword, setKeyword] = useState(""); // State to store the search keyword
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
@@ -16,8 +17,20 @@ const MainProducts = () => {
   const { error: errorDelete, success: successDelete } = productDelete;
 
   useEffect(() => {
-    dispatch(listProducts());
+    dispatch(listProducts()); // Fetches all products on mount and after a delete operation
   }, [dispatch, successDelete]);
+
+  // Function to handle form submission
+  const submitHandler = (e) => {
+    e.preventDefault(); // Prevents the default form submit behavior
+  };
+
+  // Filters products based on the keyword entered
+  const filteredProducts = keyword
+    ? products.filter((product) =>
+        product.name.toLowerCase().includes(keyword.toLowerCase())
+      )
+    : products; // If no keyword, show all products
 
   return (
     <section className="content-main">
@@ -31,29 +44,20 @@ const MainProducts = () => {
       </div>
 
       <div className="card mb-4 shadow-sm">
-        <header className="card-header bg-white ">
+        <header className="card-header bg-white">
           <div className="row gx-3 py-3">
-            <div className="col-lg-4 col-md-6 me-auto ">
-              <input
-                type="search"
-                placeholder="Search..."
-                className="form-control p-2"
-              />
-            </div>
-            <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select">
-                <option>All category</option>
-                <option>Electronics</option>
-                <option>Clothings</option>
-                <option>Something else</option>
-              </select>
-            </div>
-            <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select">
-                <option>Latest added</option>
-                <option>Cheap first</option>
-                <option>Most viewed</option>
-              </select>
+            <div className="col-lg-6 col-md-8 mx-auto d-flex justify-content-center">
+              <form onSubmit={submitHandler} className="input-group">
+                <input
+                  type="search"
+                  placeholder="Search..."
+                  className="form-control p-2"
+                  onChange={(e) => setKeyword(e.target.value)} // Updates the keyword state on change
+                />
+                <button type="submit" className="btn btn-primary ms-2">
+                  Search
+                </button>
+              </form>
             </div>
           </div>
         </header>
@@ -68,42 +72,12 @@ const MainProducts = () => {
             <Message variant="alert-danger">{error}</Message>
           ) : (
             <div className="row">
-              {/* Products */}
-              {products.map((product) => (
+              {/* Maps over filtered products to display them */}
+              {filteredProducts.map((product) => (
                 <Product product={product} key={product._id} />
               ))}
             </div>
           )}
-
-          <nav className="float-end mt-4" aria-label="Page navigation">
-            <ul className="pagination">
-              <li className="page-item disabled">
-                <Link className="page-link" to="#">
-                  Previous
-                </Link>
-              </li>
-              <li className="page-item active">
-                <Link className="page-link" to="#">
-                  1
-                </Link>
-              </li>
-              <li className="page-item">
-                <Link className="page-link" to="#">
-                  2
-                </Link>
-              </li>
-              <li className="page-item">
-                <Link className="page-link" to="#">
-                  3
-                </Link>
-              </li>
-              <li className="page-item">
-                <Link className="page-link" to="#">
-                  Next
-                </Link>
-              </li>
-            </ul>
-          </nav>
         </div>
       </div>
     </section>
