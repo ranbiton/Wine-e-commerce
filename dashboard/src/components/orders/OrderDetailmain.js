@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import OrderDetailProducts from "./OrderDetailProducts";
 import OrderDetailInfo from "./OrderDetailInfo";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deliverOrder,
@@ -10,6 +10,9 @@ import {
 import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
 import moment from "moment";
+
+
+
 
 const OrderDetailmain = (props) => {
   const { orderId } = props;
@@ -29,12 +32,19 @@ const OrderDetailmain = (props) => {
     dispatch(deliverOrder(order));
   };
 
+  const history = useHistory();
+
+  const handleOrdersClick = () => {
+    history.push("/orders");
+    window.location.reload();
+  };
+
   return (
     <section className="content-main">
       <div className="content-header">
-        <Link to="/orders" className="btn btn-dark text-white">
-          Back To Orders
-        </Link>
+      <button onClick={handleOrdersClick} className="btn btn-dark text-white">
+        Back To Orders
+      </button>
       </div>
 
       {loading ? (
@@ -56,21 +66,6 @@ const OrderDetailmain = (props) => {
                 <small className="text-white mx-3 ">
                   Order ID: {order._id}
                 </small>
-              </div>
-              <div className="col-lg-6 col-md-6 ms-auto d-flex justify-content-end align-items-center">
-                <select
-                  className="form-select d-inline-block"
-                  style={{ maxWidth: "200px" }}
-                >
-                  <option>Change status</option>
-                  <option>Awaiting payment</option>
-                  <option>Confirmed</option>
-                  <option>Shipped</option>
-                  <option>Delivered</option>
-                </select>
-                <Link className="btn btn-success ms-2" to="#">
-                  <i className="fas fa-print"></i>
-                </Link>
               </div>
             </div>
           </header>

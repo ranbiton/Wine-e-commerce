@@ -3,6 +3,7 @@ import "./App.css";
 import "./responsive.css";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import HomeScreen from "./screens/HomeScreen";
 import SingleProduct from "./screens/SingleProduct";
 import Login from "./screens/Login";
@@ -19,6 +20,7 @@ import PrivateRouter from "./PrivateRouter";
 const App = () => {
   return (
     <Router>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} />
       <Switch>
         <Route path="/" component={HomeScreen} exact />
         <Route path="/search/:keyword" component={HomeScreen} exact />

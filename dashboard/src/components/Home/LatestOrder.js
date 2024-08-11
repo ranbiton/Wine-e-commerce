@@ -25,15 +25,11 @@ const LatestOrder = (props) => {
                   <td>{order.user.email}</td>
                   <td>${order.totalPrice}</td>
                   <td>
-                    {order.isPaid ? (
+                    {
                       <span className="badge rounded-pill alert-success">
                         Paid At {moment(order.paidAt).format("MMM Do YY")}
                       </span>
-                    ) : (
-                      <span className="badge rounded-pill alert-danger">
-                        Not Paid
-                      </span>
-                    )}
+                    }
                   </td>
                   <td>{moment(order.createdAt).calendar()}</td>
                   <td className="d-flex justify-content-end align-item-center">

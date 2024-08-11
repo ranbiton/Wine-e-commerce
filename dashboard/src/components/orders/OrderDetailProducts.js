@@ -67,15 +67,11 @@ const OrderDetailProducts = (props) => {
               <dl className="dlist">
                 <dt className="text-muted">Status:</dt>
                 <dd>
-                  {order.isPaid ? (
+                  {
                     <span className="badge rounded-pill alert alert-success text-success">
                       Payment done
                     </span>
-                  ) : (
-                    <span className="badge rounded-pill alert alert-danger text-danger">
-                      Not Paid
-                    </span>
-                  )}
+                  }
                 </dd>
               </dl>
             </article>

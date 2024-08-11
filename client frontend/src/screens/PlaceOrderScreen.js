@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";  // useHistory for redirection
-import { toast } from "react-toastify";  // toast for displaying messages
+import { Link, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { createOrder } from "../Redux/Actions/OrderActions";
 import { ORDER_CREATE_RESET } from "../Redux/Constants/OrderConstants";
 import Header from "./../components/Header";
 import Message from "./../components/LoadingError/Error";
 
 const PlaceOrderScreen = () => {
-  const history = useHistory();  // useHistory hook for redirection
+  const history = useHistory();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const userLogin = useSelector((state) => state.userLogin);
@@ -35,13 +35,20 @@ const PlaceOrderScreen = () => {
 
   useEffect(() => {
     if (success) {
-      history.push(`/order/${order._id}`);
-      dispatch({ type: ORDER_CREATE_RESET });
-      toast.success('Thank you for your order');  // Display success message
-      // history.push('/');  // Redirect to the home page after showing the message
+      toast.success('Order placed successfully!', {
+        onClose: () => {
+          dispatch({ type: ORDER_CREATE_RESET });
+          history.push('/');
+        },
+        autoClose: 2000
+      });
     }
-  }, [dispatch, history, order, success]);
+    if (error) {
+      toast.error('Failed to place order. Please try again.');
+    }
+  }, [dispatch, history, success, error]);
 
+ 
   const placeOrderHandler = () => {
     dispatch(
       createOrder({
