@@ -127,8 +127,8 @@
   .subscribe-head h2 {
     font-size: 25px;
   }
-  .subscribe-section {
-    padding: 70px 0 70px;
+  .video-container {
+    padding-top: 75%; 
   }
   .card-name {
     width: 8%;
