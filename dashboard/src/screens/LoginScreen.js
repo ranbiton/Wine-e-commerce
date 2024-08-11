@@ -4,6 +4,7 @@ import Loading from "../components/LoadingError/Loading";
 import Toast from "../components/LoadingError/Toast";
 import { login } from "../Redux/Actions/userActions";
 import Message from "./../components/LoadingError/Error";
+import SimpleHeader from "../components/SimpleHeader";
 
 const Login = ({ history }) => {
   window.scrollTo(0, 0);
@@ -27,6 +28,7 @@ const Login = ({ history }) => {
   };
   return (
     <>
+    <SimpleHeader/>
       <Toast />
       <div
         className="card shadow mx-auto"
