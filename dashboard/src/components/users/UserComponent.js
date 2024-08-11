@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listUser } from "../../Redux/Actions/userActions";
 import Loading from "../LoadingError/Loading";
@@ -7,6 +6,8 @@ import Message from "../LoadingError/Error";
 
 const UserComponent = () => {
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
@@ -14,27 +15,54 @@ const UserComponent = () => {
   useEffect(() => {
     dispatch(listUser());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (users) {
+      setFilteredUsers(users);
+    }
+  }, [users]);
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearchClick = () => {
+    const lowercasedSearchTerm = searchTerm.toLowerCase();
+    const filtered = users.filter(
+      (user) =>
+        user.name.toLowerCase().includes(lowercasedSearchTerm) ||
+        user.email.toLowerCase().includes(lowercasedSearchTerm)
+    );
+    setFilteredUsers(filtered);
+  };
+
   return (
     <section className="content-main">
-    <div className="content-header">
-      <h2 className="content-title">Users</h2>
-    </div>
+      <div className="content-header">
+        <h2 className="content-title">Users</h2>
+      </div>
 
-    <div className="card mb-4">
-      <header className="card-header">
-        <div className="row gx-3">
-          <div className="col-lg-6 col-md-8 mx-auto d-flex justify-content-center">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="form-control"
-            />
-            <button type="submit" className="search-button btn btn-primary ms-2">
-              Search
-            </button>
+      <div className="card mb-4">
+        <header className="card-header">
+          <div className="row gx-3">
+            <div className="col-lg-6 col-md-8 mx-auto d-flex justify-content-center">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="form-control"
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+              <button
+                type="button"
+                className="search-button btn btn-primary ms-2"
+                onClick={handleSearchClick}
+              >
+                Search
+              </button>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
 
         {/* Card */}
         <div className="card-body">
@@ -44,7 +72,7 @@ const UserComponent = () => {
             <Message variant="alert-danger">{error}</Message>
           ) : (
             <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
-              {users.map((user) => (
+              {filteredUsers.map((user) => (
                 <div className="col" key={user._id}>
                   <div className="card card-user shadow-sm">
                     <div className="card-header">
@@ -60,7 +88,7 @@ const UserComponent = () => {
                         {user.isAdmin === true ? (
                           <p className="m-0">Admin</p>
                         ) : (
-                          <p className="m-0">user</p>
+                          <p className="m-0">User</p>
                         )}
 
                         <p>
