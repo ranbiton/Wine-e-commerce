@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Toast from "./../LoadingError/Toast";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,9 +29,9 @@ const EditProductMain = (props) => {
   const [color, setColor] = useState("");
   const [grapeVariety, setGrapeVariety] = useState("");
   const [year, setYear] = useState(0);
+  const canvasRef = useRef(null); // Ref for the canvas element
 
   const dispatch = useDispatch();
-
   const productEdit = useSelector((state) => state.productEdit);
   const { loading, error, product } = productEdit;
 
@@ -58,19 +58,51 @@ const EditProductMain = (props) => {
         setColor(product.color);
         setGrapeVariety(product.grapeVariety);
         setYear(product.year);
+        if (product.image) {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = canvasRef.current;
+            const ctx = canvas.getContext('2d');
+            canvas.width = img.width; // Use original image width
+            canvas.height = img.height; // Use original image height
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+          };
+          img.src = product.image;
+        }
       }
     }
-  }, [product, dispatch, productId, successUpdate]);
+  }, [product, productId, dispatch, successUpdate]);
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        const defaultWidth = 300; // Default width
+        const defaultHeight = 300; // Default height
+        canvas.width = defaultWidth;
+        canvas.height = defaultHeight;
+        ctx.drawImage(img, 0, 0, defaultWidth, defaultHeight);
+      };
+      img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
+    const canvas = canvasRef.current;
+    const imageUrl = canvas.toDataURL('image/png');
     dispatch(
       updateProduct({
         _id: productId,
         name,
         price,
         description,
-        image,
+        image: imageUrl, // Use the image data URL from the canvas
         countInStock,
         grapeVariety,
         color,
@@ -100,114 +132,42 @@ const EditProductMain = (props) => {
             <div className="col-xl-8 col-lg-8">
               <div className="card mb-4 shadow-sm">
                 <div className="card-body">
-                  {errorUpdate && (
-                    <Message variant="alert-danger">{errorUpdate}</Message>
-                  )}
+                  {errorUpdate && <Message variant="alert-danger">{errorUpdate}</Message>}
                   {loadingUpdate && <Loading />}
-                  {loading ? (
-                    <Loading />
-                  ) : error ? (
-                    <Message variant="alert-danger">{error}</Message>
-                  ) : (
+                  {loading ? <Loading /> : error ? <Message variant="alert-danger">{error}</Message> : (
                     <>
                       <div className="mb-4">
-                        <label htmlFor="product_title" className="form-label">
-                          Product title
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="Type here"
-                          className="form-control"
-                          id="product_title"
-                          required
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                        />
+                        <label className="form-label">Product title</label>
+                        <input type="text" className="form-control" required value={name} onChange={(e) => setName(e.target.value)} />
                       </div>
                       <div className="mb-4">
-                        <label htmlFor="product_price" className="form-label">
-                          Price
-                        </label>
-                        <input
-                          type="number"
-                          placeholder="Type here"
-                          className="form-control"
-                          id="product_price"
-                          required
-                          value={price}
-                          onChange={(e) => setPrice(e.target.value)}
-                        />
+                        <label className="form-label">Price</label>
+                        <input type="number" className="form-control" required value={price} onChange={(e) => setPrice(e.target.value)} />
                       </div>
                       <div className="mb-4">
-                        <label htmlFor="product_price" className="form-label">
-                          Count In Stock
-                        </label>
-                        <input
-                          type="number"
-                          placeholder="Type here"
-                          className="form-control"
-                          id="product_price"
-                          required
-                          value={countInStock}
-                          onChange={(e) => setCountInStock(e.target.value)}
-                        />
+                        <label className="form-label">Count In Stock</label>
+                        <input type="number" className="form-control" required value={countInStock} onChange={(e) => setCountInStock(e.target.value)} />
                       </div>
                       <div className="mb-4">
-                        <label htmlFor="product_price" className="form-label">
-                          year
-                        </label>
-                        <input
-                          type="number"
-                          placeholder="Type here"
-                          className="form-control"
-                          id="product_price"
-                          required
-                          value={year}
-                          onChange={(e) => setYear(e.target.value)}
-                        />
+                        <label className="form-label">Year</label>
+                        <input type="number" className="form-control" required value={year} onChange={(e) => setYear(e.target.value)} />
                       </div>
                       <div className="mb-4">
-                    <label className="form-label">color</label>
-                    <textarea
-                      placeholder="Type here"
-                      className="form-control"
-                      rows="1"
-                      required
-                      value={color}
-                      onChange={(e) => setColor(e.target.value)}
-                    ></textarea>
-                  </div>
-                  <div className="mb-4">
-                    <label className="form-label">kind of grape</label>
-                    <textarea
-                      placeholder="Type here"
-                      className="form-control"
-                      rows="1"
-                      required
-                      value={grapeVariety}
-                      onChange={(e) => setGrapeVariety(e.target.value)}
-                    ></textarea>
-                  </div>
+                        <label className="form-label">Color</label>
+                        <textarea className="form-control" required value={color} onChange={(e) => setColor(e.target.value)}></textarea>
+                      </div>
+                      <div className="mb-4">
+                        <label className="form-label">Kind of Grape</label>
+                        <textarea className="form-control" required value={grapeVariety} onChange={(e) => setGrapeVariety(e.target.value)}></textarea>
+                      </div>
                       <div className="mb-4">
                         <label className="form-label">Description</label>
-                        <textarea
-                          placeholder="Type here"
-                          className="form-control"
-                          rows="7"
-                          required
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value)}
-                        ></textarea>
+                        <textarea className="form-control" required value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                       </div>
                       <div className="mb-4">
                         <label className="form-label">Images</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          value={image}
-                          required
-                          onChange={(e) => setImage(e.target.value)}
-                        />
+                        <input type="file" className="form-control" onChange={handleImageUpload} />
+                        <canvas ref={canvasRef} style={{ marginTop: "20px", width: "300px", height: "300px" }}></canvas>
                       </div>
                     </>
                   )}

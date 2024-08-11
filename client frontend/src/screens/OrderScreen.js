@@ -104,19 +104,6 @@ const OrderScreen = ({ match }) => {
                     </h5>
                     <p>Shipping: {order.shippingAddress.country}</p>
                     <p>Pay method: {order.paymentMethod}</p>
-                    {order.isPaid ? (
-                      <div className="bg-info p-2 col-12">
-                        <p className="text-white text-center text-sm-start">
-                          Paid on {moment(order.paidAt).calendar()}
-                        </p>
-                      </div>
-                    ) : (
-                      <div className="bg-danger p-2 col-12">
-                        <p className="text-white text-center text-sm-start">
-                          Not Paid
-                        </p>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>
@@ -137,19 +124,6 @@ const OrderScreen = ({ match }) => {
                       {order.shippingAddress.address},{" "}
                       {order.shippingAddress.postalCode}
                     </p>
-                    {order.isDelivered ? (
-                      <div className="bg-info p-2 col-12">
-                        <p className="text-white text-center text-sm-start">
-                          Delivered on {moment(order.deliveredAt).calendar()}
-                        </p>
-                      </div>
-                    ) : (
-                      <div className="bg-danger p-2 col-12">
-                        <p className="text-white text-center text-sm-start">
-                          Not Delivered
-                        </p>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>

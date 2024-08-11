@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -14,6 +14,7 @@ const ToastObjects = {
   pauseOnHover: false,
   autoClose: 2000,
 };
+
 const AddProductMain = () => {
   const [name, setName] = useState("");
   const [color, setColor] = useState("");
@@ -23,9 +24,9 @@ const AddProductMain = () => {
   const [image, setImage] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
+  const canvasRef = useRef(null);
 
   const dispatch = useDispatch();
-
   const productCreate = useSelector((state) => state.productCreate);
   const { loading, error, product } = productCreate;
 
@@ -44,9 +45,31 @@ const AddProductMain = () => {
     }
   }, [product, dispatch]);
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        const defaultWidth = 300; // Default resize width
+        const defaultHeight = 300; // Default resize height
+        canvas.width = defaultWidth;
+        canvas.height = defaultHeight;
+        ctx.drawImage(img, 0, 0, defaultWidth, defaultHeight); // Draw the image scaled to canvas size
+      };
+      img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createProduct(name, price, description, image, countInStock, grapeVariety ,color ,year ));
+    const canvas = canvasRef.current;
+    const imageUrl = canvas.toDataURL('image/png'); // Convert canvas image to data URL
+    setImage(imageUrl); // Set the image URL to the state
+    dispatch(createProduct(name, price, description, imageUrl, countInStock, grapeVariety, color, year));
   };
 
   return (
@@ -101,35 +124,21 @@ const AddProductMain = () => {
                     />
                   </div>
                   <div className="mb-4">
-                    <label htmlFor="product_price" className="form-label">
+                    <label htmlFor="product_stock" className="form-label">
                       Count In Stock
                     </label>
                     <input
                       type="number"
                       placeholder="Type here"
                       className="form-control"
-                      id="product_price"
+                      id="product_stock"
                       required
                       value={countInStock}
                       onChange={(e) => setCountInStock(e.target.value)}
                     />
                   </div>
                   <div className="mb-4">
-                        <label htmlFor="product_price" className="form-label">
-                          year
-                        </label>
-                        <input
-                          type="number"
-                          placeholder="Type here"
-                          className="form-control"
-                          id="product_price"
-                          required
-                          value={year}
-                          onChange={(e) => setYear(e.target.value)}
-                        />
-                      </div>
-                  <div className="mb-4">
-                    <label className="form-label">color</label>
+                    <label className="form-label">Color</label>
                     <textarea
                       placeholder="Type here"
                       className="form-control"
@@ -140,7 +149,7 @@ const AddProductMain = () => {
                     ></textarea>
                   </div>
                   <div className="mb-4">
-                    <label className="form-label">kind of grape</label>
+                    <label className="form-label">Kind of Grape</label>
                     <textarea
                       placeholder="Type here"
                       className="form-control"
@@ -165,13 +174,10 @@ const AddProductMain = () => {
                     <label className="form-label">Images</label>
                     <input
                       className="form-control"
-                      type="text"
-                      placeholder="Enter Image URL"
-                      value={image}
-                      required
-                      onChange={(e) => setImage(e.target.value)}
+                      type="file"
+                      onChange={handleImageUpload}
                     />
-                    <input className="form-control mt-3" type="file" />
+                    <canvas ref={canvasRef} style={{ marginTop: "20px", width: "300px", height: "300px" }}></canvas>
                   </div>
                 </div>
               </div>

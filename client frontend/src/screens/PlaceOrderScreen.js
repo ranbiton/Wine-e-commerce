@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";  // useHistory for redirection
+import { toast } from "react-toastify";  // toast for displaying messages
 import { createOrder } from "../Redux/Actions/OrderActions";
 import { ORDER_CREATE_RESET } from "../Redux/Constants/OrderConstants";
 import Header from "./../components/Header";
 import Message from "./../components/LoadingError/Error";
 
-const PlaceOrderScreen = ({ history }) => {
-  window.scrollTo(0, 0);
-
+const PlaceOrderScreen = () => {
+  const history = useHistory();  // useHistory hook for redirection
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  // Calculate Price
+  // Calculate Prices
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
@@ -37,8 +37,10 @@ const PlaceOrderScreen = ({ history }) => {
     if (success) {
       history.push(`/order/${order._id}`);
       dispatch({ type: ORDER_CREATE_RESET });
+      toast.success('Thank you for your order');  // Display success message
+      // history.push('/');  // Redirect to the home page after showing the message
     }
-  }, [history, dispatch, success, order]);
+  }, [dispatch, history, order, success]);
 
   const placeOrderHandler = () => {
     dispatch(
