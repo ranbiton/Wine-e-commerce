@@ -125,4 +125,23 @@ userRouter.get(
   })
 );
 
+// DELETE USER
+userRouter.delete(
+  "/:id",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    console.log("Attempting to delete user with id:", req.params.id);
+    const user = await User.findById(req.params.id);
+    if (user) {
+      await user.remove();
+      res.json({ message: "User removed" });
+    } else {
+      console.log("User not found with id:", req.params.id);
+      res.status(404);
+      throw new Error("User not found");
+    }
+  })
+);
+
 export default userRouter;

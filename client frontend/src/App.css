@@ -603,6 +603,41 @@ video {
   height: 50px;
   object-fit: contain;
 }
+.btn-red {
+  color: #fff;
+  background-color: #8B0000;
+  border-color: #8B0000;
+}
+
+.btn-red:hover {
+  color: #fff;
+  background-color: #B22222;
+  border-color: #B22222;
+}
+
+.btn-white {
+  color: #000;
+  background-color: #FFFFFF;
+  border-color: #000;
+}
+
+.btn-white:hover {
+  color: #000;
+  background-color: #F8F8FF;
+  border-color: #000;
+}
+
+.btn-rose {
+  color: #000;
+  background-color: #FFE4E1;
+  border-color: #FFE4E1;
+}
+
+.btn-rose:hover {
+  color: #000;
+  background-color: #FFC0CB;
+  border-color: #FFC0CB;
+}
 
 /* Payment */
 .payment-container {
@@ -673,4 +708,47 @@ video {
 .page-item.active .page-link {
   background-color: black;
   border: 1px solid black;
+}
+
+
+.age-check-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.age-check-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.age-check-buttons {
+  margin-top: 20px;
+}
+
+.age-check-buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.age-check-buttons button:first-child {
+  background-color: #f44336;
+  color: white;
+}
+
+.age-check-buttons button:last-child {
+  background-color: #4CAF50;
+  color: white;
 }

@@ -7,6 +7,9 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
+  USER_DELETE_REQUEST,
+  USER_DELETE_SUCCESS,
+  USER_DELETE_FAIL
 } from "../Constants/UserContants";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -96,5 +99,42 @@ export const listUser = () => async (dispatch, getState) => {
       type: USER_LIST_FAIL,
       payload: message,
     });
+  }
+};
+
+// DELETE USER
+export const deleteUser = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_DELETE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.delete(`/api/users/${id}`, config);
+
+    dispatch({ type: USER_DELETE_SUCCESS });
+    toast.success("User deleted successfully");
+    dispatch(listUser()); // Refresh the user list
+  } catch (error) {
+    console.error("Full error response:", error.response);
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: USER_DELETE_FAIL,
+      payload: message,
+    });
+    toast.error(message);
   }
 };

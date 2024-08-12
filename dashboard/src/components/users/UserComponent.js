@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listUser } from "../../Redux/Actions/userActions";
+import { listUser, deleteUser } from "../../Redux/Actions/userActions";
 import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
+import { toast } from "react-toastify";
 
 const UserComponent = () => {
   const dispatch = useDispatch();
@@ -12,15 +13,27 @@ const UserComponent = () => {
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
 
+  const userDelete = useSelector((state) => state.userDelete);
+  const { error: deleteError, success: deleteSuccess } = userDelete;
+
   useEffect(() => {
     dispatch(listUser());
-  }, [dispatch]);
+  }, [dispatch, deleteSuccess]);
 
   useEffect(() => {
     if (users) {
       setFilteredUsers(users);
     }
   }, [users]);
+
+  useEffect(() => {
+    if (deleteSuccess) {
+      toast.success("User deleted successfully");
+    }
+    if (deleteError) {
+      toast.error(deleteError);
+    }
+  }, [deleteSuccess, deleteError]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -34,6 +47,13 @@ const UserComponent = () => {
         user.email.toLowerCase().includes(lowercasedSearchTerm)
     );
     setFilteredUsers(filtered);
+  };
+
+  const deleteHandler = (id) => {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      console.log("Deleting user with id:", id);
+      dispatch(deleteUser(id));
+    }
   };
 
   return (
@@ -95,6 +115,13 @@ const UserComponent = () => {
                           <a href={`mailto:${user.email}`}>{user.email}</a>
                         </p>
                       </div>
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => deleteHandler(user._id)}
+                        disabled={user.isAdmin}
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
                 </div>

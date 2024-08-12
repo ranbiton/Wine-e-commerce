@@ -23,16 +23,20 @@ const Orders = (props) => {
         {orders.map((order) => (
           <tr key={order._id}>
             <td>
-              <b>{order.user.name}</b>
+              <b>{order.user?.name || 'N/A'}</b>
             </td>
-            <td>{order.user.email}</td>
+            <td>{order.user?.email || 'N/A'}</td>
             <td>${order.totalPrice}</td>
             <td>
-              {
+              {order.isPaid ? (
                 <span className="badge rounded-pill alert-success">
                   Paid At {moment(order.paidAt).format("MMM Do YY")}
                 </span>
-                }
+              ) : (
+                <span className="badge rounded-pill alert-danger">
+                  Not Paid
+                </span>
+              )}
             </td>
             <td>{moment(order.createdAt).format("MMM Do YY")}</td>
             <td>
