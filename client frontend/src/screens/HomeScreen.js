@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import Header from "./../components/Header";
 import ShopSection from "./../components/homeComponents/ShopSection";
 import ContactInfo from "./../components/homeComponents/ContactInfo";
 import VideoSection from "../components/homeComponents/VideoSection";
 
 const HomeScreen = ({ match }) => {
+  window.scrollTo(0, 0);
   const history = useHistory();
+
   const [showAgeCheck, setShowAgeCheck] = useState(false);
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -20,8 +23,9 @@ const HomeScreen = ({ match }) => {
     }
   }, [userInfo]);
 
-  const keyword = match.params.keyword;
-  const pagenumber = match.params.pagenumber;
+
+  const keyword = match.params.keyword || "";
+  const pageNumber = match.params.pageNumber || 1;
 
   const handleWineTypeFilter = (wineType) => {
     if (wineType === "all") {
@@ -31,12 +35,14 @@ const HomeScreen = ({ match }) => {
     }
   };
 
+  
   const handleAgeConfirmation = (isOver18) => {
     setShowAgeCheck(false);
     if (!isOver18) {
       history.push("/not-found");
     }
   };
+
 
   return (
     <div>
@@ -83,7 +89,7 @@ const HomeScreen = ({ match }) => {
           </div>
         </div>
       </div>
-      <ShopSection keyword={keyword} pagenumber={pagenumber} />
+      <ShopSection keyword={keyword} pageNumber={pageNumber} />
       <VideoSection />
       <ContactInfo />
     </div>

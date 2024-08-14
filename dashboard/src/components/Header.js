@@ -19,7 +19,6 @@ const Header = () => {
         $("body").removeClass("aside-mini");
         $(".navbar-aside").removeClass("show");
       } else {
-        // minimize sidebar on desktop
         $("body").toggleClass("aside-mini");
       }
     });

@@ -22,8 +22,9 @@ const App = () => {
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} />
       <Switch>
         <Route path="/" component={HomeScreen} exact />
-        <Route path="/search/:keyword" component={HomeScreen} exact />
-        <Route path="/page/:pagenumber" component={HomeScreen} exact />
+        <Route path="/search/:keyword/page/:pageNumber" component={HomeScreen} exact />
+        <Route path="/page/:pageNumber" component={HomeScreen} exact />
+        <Route path="/search/:keyword" component={HomeScreen} exact />  
         <Route
           path="/search/:keyword/page/:pageNumber"
           component={HomeScreen}

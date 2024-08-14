@@ -31,7 +31,6 @@ const CartScreen = ({ match, location, history }) => {
   return (
     <>
       <Header />
-      {/* Cart */}
       <div className="container">
         {cartItems.length === 0 ? (
           <div className=" alert alert-info text-center mt-3">
@@ -54,7 +53,6 @@ const CartScreen = ({ match, location, history }) => {
                 ({cartItems.length})
               </Link>
             </div>
-            {/* cartiterm */}
             {cartItems.map((item) => (
               <div className="cart-iterm row">
                 <div
@@ -93,7 +91,6 @@ const CartScreen = ({ match, location, history }) => {
               </div>
             ))}
 
-            {/* End of cart iterms */}
             <div className="total">
               <span className="sub">total:</span>
               <span className="total-price">${total}</span>

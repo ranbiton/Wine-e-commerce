@@ -15,4 +15,5 @@ const ProductEditScreen = ({ match }) => {
     </>
   );
 };
+
 export default ProductEditScreen;

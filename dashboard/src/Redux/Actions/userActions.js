@@ -121,7 +121,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
 
     dispatch({ type: USER_DELETE_SUCCESS });
     toast.success("User deleted successfully");
-    dispatch(listUser()); // Refresh the user list
+    dispatch(listUser());
   } catch (error) {
     console.error("Full error response:", error.response);
     const message =

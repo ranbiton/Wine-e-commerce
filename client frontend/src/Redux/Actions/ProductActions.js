@@ -13,26 +13,15 @@ import {
 import { logout } from "./userActions";
 
 // PRODUCT LIST
-// PRODUCT LIST
-export const listProduct = (keyword = '', pageNumber = 1) => async (dispatch) => {
+export const listProduct = (keyword = '', pageNumber = '') => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
-    // Construct the query string
-    const queryString = new URLSearchParams({
-      keyword: keyword,
-      pageNumber: pageNumber.toString()
-    }).toString();
+    const { data } = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`);
 
-    const { data } = await axios.get(`/api/products?${queryString}`);
-
-    dispatch({ 
-      type: PRODUCT_LIST_SUCCESS, 
-      payload: {
-        products: data.products,
-        page: data.page,
-        pages: data.pages
-      }
+    dispatch({
+      type: PRODUCT_LIST_SUCCESS,
+      payload: data
     });
   } catch (error) {
     dispatch({

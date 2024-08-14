@@ -27,7 +27,6 @@ const Header = () => {
   };
   return (
     <div>
-      {/* Top Header */}
       <div className="Announcement ">
         <div className="container">
           <div className="row">
@@ -38,10 +37,8 @@ const Header = () => {
           </div>
         </div>
       </div>
-      {/* Header */}
       <div className="header">
         <div className="container">
-          {/* MOBILE HEADER */}
           <div className="mobile-header">
             <div className="container ">
               <div className="row ">
@@ -120,8 +117,6 @@ const Header = () => {
               </div>
             </div>
           </div>
-
-          {/* PC HEADER */}
           <div className="pc-header">
             <div className="row">
               <div className="col-md-3 col-4 d-flex align-items-center">

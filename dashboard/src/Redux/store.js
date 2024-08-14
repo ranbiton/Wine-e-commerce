@@ -18,7 +18,7 @@ import {
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userList: userListReducer,
-  userDelete: userDeleteReducer,  // Add this line
+  userDelete: userDeleteReducer,
   productList: productListReducer,
   productDelete: productDeleteReducer,
   productCreate: productCreateReducer,

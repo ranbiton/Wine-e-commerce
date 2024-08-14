@@ -53,11 +53,11 @@ const AddProductMain = () => {
       img.onload = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-        const defaultWidth = 300; // Default resize width
-        const defaultHeight = 300; // Default resize height
+        const defaultWidth = 300; 
+        const defaultHeight = 300; 
         canvas.width = defaultWidth;
         canvas.height = defaultHeight;
-        ctx.drawImage(img, 0, 0, defaultWidth, defaultHeight); // Draw the image scaled to canvas size
+        ctx.drawImage(img, 0, 0, defaultWidth, defaultHeight);
       };
       img.src = event.target.result;
     };
@@ -67,8 +67,8 @@ const AddProductMain = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     const canvas = canvasRef.current;
-    const imageUrl = canvas.toDataURL('image/png'); // Convert canvas image to data URL
-    setImage(imageUrl); // Set the image URL to the state
+    const imageUrl = canvas.toDataURL('image/png'); 
+    setImage(imageUrl);
     dispatch(createProduct(name, price, description, imageUrl, countInStock, grapeVariety, color, year));
   };
 

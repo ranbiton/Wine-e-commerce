@@ -12,8 +12,6 @@ import Message from "../LoadingError/Error";
 import moment from "moment";
 
 
-
-
 const OrderDetailmain = (props) => {
   const { orderId } = props;
   const dispatch = useDispatch();
@@ -79,7 +77,6 @@ const OrderDetailmain = (props) => {
                   <OrderDetailProducts order={order} loading={loading} />
                 </div>
               </div>
-              {/* Payment Info */}
               <div className="col-lg-3">
                 <div className="box shadow-sm bg-light">
                   {order.isDelivered ? (

@@ -180,4 +180,5 @@ export const updateProduct = (product) => async (dispatch, getState) => {
       payload: message,
     });
   }
+  
 };

@@ -33,7 +33,6 @@ const Register = ({ location, history }) => {
   return (
     <>
       <SimpleHeader />
-
       <div className="container d-flex flex-column justify-content-center align-items-center login-center">
         {error && <Message variant="alert-danger">{error}</Message>}
         {loading && <Loading />}

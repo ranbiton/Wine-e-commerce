@@ -12,7 +12,6 @@ const ProfileTabs = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const toastId = React.useRef(null);
-
   const Toastobjects = {
     pauseOnFocusLoss: false,
     draggable: false,

@@ -12,4 +12,5 @@ Message.defaultProps = {
   variant: "alert-info",
 };
 
+
 export default Message;

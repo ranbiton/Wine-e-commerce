@@ -7,8 +7,8 @@ import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
 
 const MainProducts = () => {
-  const [keyword, setKeyword] = useState(""); // State to store the search keyword
-  const [searchResults, setSearchResults] = useState([]); // State to store filtered products
+  const [keyword, setKeyword] = useState(""); 
+  const [searchResults, setSearchResults] = useState([]); 
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
@@ -18,13 +18,12 @@ const MainProducts = () => {
   const { error: errorDelete, success: successDelete } = productDelete;
 
   useEffect(() => {
-    dispatch(listProducts()); // Fetches all products on mount and after a delete operation
+    dispatch(listProducts()); 
   }, [dispatch, successDelete]);
 
-  // Function to handle form submission
+
   const submitHandler = (e) => {
     e.preventDefault();
-    // Filters products based on the keyword entered and sets search results
     const results = products.filter((product) =>
       product.name.toLowerCase().includes(keyword.toLowerCase()) ||
       product.color.toLowerCase().includes(keyword.toLowerCase()) ||
@@ -34,7 +33,6 @@ const MainProducts = () => {
     console.log('Searching for:', keyword);
   };
 
-  // Sets filtered products to be displayed
   const filteredProducts = searchResults.length > 0 ? searchResults : products;
 
   return (
@@ -57,7 +55,7 @@ const MainProducts = () => {
                   type="search"
                   placeholder="Search..."
                   className="form-control p-2"
-                  onChange={(e) => setKeyword(e.target.value)} // Updates the keyword state on change
+                  onChange={(e) => setKeyword(e.target.value)}
                 />
                 <button type="submit" className="btn btn-primary ms-2">
                   Search
@@ -77,7 +75,6 @@ const MainProducts = () => {
             <Message variant="alert-danger">{error}</Message>
           ) : (
             <div className="row">
-              {/* Maps over filtered products to display them */}
               {filteredProducts.map((product) => (
                 <Product product={product} key={product._id} />
               ))}

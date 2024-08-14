@@ -134,7 +134,6 @@ const SingleProduct = ({ history, match }) => {
               </div>
             </div>
 
-            {/* RATING */}
             <div className="row my-5">
               <div className="col-md-6">
                 <h6 className="mb-3">REVIEWS</h6>

@@ -29,6 +29,7 @@ const Login = ({ history }) => {
   return (
     <>
     <SimpleHeader/>
+    
       <Toast />
       <div
         className="card shadow mx-auto"

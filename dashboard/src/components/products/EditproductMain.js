@@ -29,7 +29,7 @@ const EditProductMain = (props) => {
   const [color, setColor] = useState("");
   const [grapeVariety, setGrapeVariety] = useState("");
   const [year, setYear] = useState(0);
-  const canvasRef = useRef(null); // Ref for the canvas element
+  const canvasRef = useRef(null); 
 
   const dispatch = useDispatch();
   const productEdit = useSelector((state) => state.productEdit);
@@ -63,8 +63,8 @@ const EditProductMain = (props) => {
           img.onload = () => {
             const canvas = canvasRef.current;
             const ctx = canvas.getContext('2d');
-            canvas.width = img.width; // Use original image width
-            canvas.height = img.height; // Use original image height
+            canvas.width = img.width; 
+            canvas.height = img.height; 
             ctx.drawImage(img, 0, 0, img.width, img.height);
           };
           img.src = product.image;
@@ -81,8 +81,8 @@ const EditProductMain = (props) => {
       img.onload = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-        const defaultWidth = 300; // Default width
-        const defaultHeight = 300; // Default height
+        const defaultWidth = 300; 
+        const defaultHeight = 300;
         canvas.width = defaultWidth;
         canvas.height = defaultHeight;
         ctx.drawImage(img, 0, 0, defaultWidth, defaultHeight);
@@ -102,7 +102,7 @@ const EditProductMain = (props) => {
         name,
         price,
         description,
-        image: imageUrl, // Use the image data URL from the canvas
+        image: imageUrl, 
         countInStock,
         grapeVariety,
         color,

@@ -57,4 +57,5 @@ const OrderDetailInfo = (props) => {
   );
 };
 
+
 export default OrderDetailInfo;

@@ -84,7 +84,6 @@ const UserComponent = () => {
           </div>
         </header>
 
-        {/* Card */}
         <div className="card-body">
           {loading ? (
             <Loading />

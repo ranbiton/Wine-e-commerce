@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 const Pagination = (props) => {
   const { page, pages, keyword = "" } = props;
   return (

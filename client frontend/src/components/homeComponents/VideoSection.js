@@ -1,5 +1,4 @@
 import React from "react";
-
 const CalltoActionSection = () => {
   return (
 <div className="container">
