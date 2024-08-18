@@ -96,7 +96,7 @@ const PlaceOrderScreen = () => {
                   <strong>Order info</strong>
                 </h5>
                 <p>Shipping: {cart.shippingAddress.country}</p>
-                <p>Pay method: {cart.paymentMethod}</p>
+                <p>Pay method: Credit Card</p>
               </div>
             </div>
           </div>

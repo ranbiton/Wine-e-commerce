@@ -103,7 +103,7 @@ const OrderScreen = ({ match }) => {
                       <strong>Order info</strong>
                     </h5>
                     <p>Shipping: {order.shippingAddress.country}</p>
-                    <p>Pay method: {order.paymentMethod}</p>
+                    <p>Pay method: Credit Card</p>
                   </div>
                 </div>
               </div>

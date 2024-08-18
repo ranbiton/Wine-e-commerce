@@ -50,11 +50,9 @@ const { loading, error, orders } = props;
                           {order._id}
                         </a>
                       </td>
-                      <td>{order.isPaid}</td>
+                      <td>{order.isPaid}Paid</td>
                       <td>
-                        {order.isPaid
-                          ? moment(order.paidAt).calendar()
-                          : moment(order.createdAt).calendar()}
+                        {moment(order.createdAt).calendar()}
                       </td>
                       <td>${order.totalPrice}</td>
                     </tr>
